@@ -2,30 +2,35 @@ const { getProvidersService, getProviderIdService } = require("../services/provi
 
 const getProviderController = async (req, res) => {
     try {
-
         /** Query Parameters
          *  - first_name: string (optional)
          *  - last_name: string (optional)
          */
         let firstName = req.query.first_name?.trim() || null;
         let lastName = req.query.last_name?.trim() || null;
+        let specialty = req.query.specialty?.trim() || null;
 
-        if (firstName && lastName) {
+        if (firstName && lastName && specialty) {
 
             // validate characters
-            if ((firstName && !/^[a-zA-Z\s]+$/.test(firstName)) || (lastName && !/^[a-zA-Z\s]+$/.test(lastName))) {
+            if (
+                (firstName && !/^[a-zA-Z\s]+$/.test(firstName)) ||
+                (lastName && !/^[a-zA-Z\s]+$/.test(lastName)) ||
+                (specialty && !/^[a-zA-Z\s]+$/.test(specialty))
+            ) {
                 return res.status(400).json({ message: "input contains invalid characters" });
             }
 
             // validate max length
-            if ((firstName.length || lastName.length) > 30) {
+            if ((firstName.length || lastName.length || specialty.length) > 30) {
                 return res.status(400).json({ message: "caracters too long" });
             }
         }
 
         const filters = {
             first_name: firstName,
-            last_name: lastName
+            last_name: lastName,
+            specialty: specialty
         };
         const { data, error } = await getProvidersService(filters);
 
