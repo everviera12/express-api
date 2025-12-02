@@ -3,7 +3,7 @@ const { getProviderController, getProviderIdController } = require("../controlle
 
 const router = Router();
 
-router.get("/providers", getProviderController);
-router.get("/providers/:id", getProviderIdController);
+router.get("/", getProviderController);
+router.get("/:id", getProviderIdController);
 
 module.exports = router;

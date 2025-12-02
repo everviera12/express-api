@@ -16,7 +16,6 @@ const limiter = rateLimit({
     },
     standardHeaders: true,
     legacyHeaders: false,
-    ipv6Subnet: 56,
 })
 
 const conditionalLimiter = (req, res, next) => {

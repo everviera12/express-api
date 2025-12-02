@@ -11,7 +11,7 @@ const getProviderIdService = async (id_provider) => {
         .from("providers")
         .select("*")
         .eq("id", id_provider)
-        .single();
+        .maybeSingle();
 }
 
 module.exports = { getProvidersService, getProviderIdService };
