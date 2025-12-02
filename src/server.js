@@ -5,26 +5,17 @@ const app = express()
 const providers = require('./routes/provider.route');
 
 // middlewares
-const { limiter } = require('./middleware/ratelimit');
-
-// rate limit
-if (process.env.NODE_ENV === 'production') {
-    app.use(limiter);
-}
+const { conditionalLimiter } = require('./middleware/ratelimit');
 
 app.use(express.json());
+app.set('trust proxy', 1);
 
 /** API base route
  *  Applies rate limiting ONLY when running in production.
  *  @next - skip limiter when in development
  *  @providers - route to show all provider data
 */
-app.use('/api/v1/', (req, res, next) => {
-    if (process.env.NODE_ENV === 'production') {
-        return limiter(req, res, next);
-    }
-    next();
-}, providers);
+app.use('/api/v1/', conditionalLimiter, providers);
 
 
 const port = 3000
