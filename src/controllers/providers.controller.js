@@ -2,11 +2,35 @@ const { getProvidersService, getProviderIdService } = require("../services/provi
 
 const getProviderController = async (req, res) => {
     try {
-        const { data, error } = await getProvidersService();
+
+        /** Query Parameters
+         *  - first_name: string (optional)
+         *  - last_name: string (optional)
+         */
+        let firstName = req.query.first_name?.trim() || null;
+        let lastName = req.query.last_name?.trim() || null;
+
+        if (firstName && lastName) {
+
+            // validate characters
+            if ((firstName && !/^[a-zA-Z\s]+$/.test(firstName)) || (lastName && !/^[a-zA-Z\s]+$/.test(lastName))) {
+                return res.status(400).json({ message: "input contains invalid characters" });
+            }
+
+            // validate max length
+            if ((firstName.length || lastName.length) > 30) {
+                return res.status(400).json({ message: "caracters too long" });
+            }
+        }
+
+        const filters = {
+            first_name: firstName,
+            last_name: lastName
+        };
+        const { data, error } = await getProvidersService(filters);
 
         if (error) return res.status(400).json({ message: 'Error fetching providers', error: error.message });
         if (!data || data.length === 0) return res.status(404).json({ message: "No providers found" });
-
         return res.status(200).json({ message: 'success', data: data });
 
     } catch (err) {
