@@ -8,17 +8,25 @@ const providers = require('./routes/provider.route');
 const { conditionalLimiter } = require('./middleware/ratelimit');
 
 app.use(express.json());
-app.set('trust proxy', 1);
+
+/** Proxy config
+* Enable trust proxy to correctly read client IPs when behind a reverse proxy.
+*/
+if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", true);
+}
 
 /** API base route
  *  Applies rate limiting ONLY when running in production.
- *  @next - skip limiter when in development
+ *  @conditionalLimiter - function to handle many request
  *  @providers - route to show all provider data
 */
-app.use('/api/v1/', conditionalLimiter, providers);
+app.use('/api/v1/providers', conditionalLimiter, providers);
 
 
-const port = 3000
+
+/* https://express-api-v1.up.railway.app */
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`API running on port ${port} (${process.env.NODE_ENV})`);
 })
