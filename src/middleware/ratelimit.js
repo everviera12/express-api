@@ -19,6 +19,13 @@ const limiter = rateLimit({
     ipv6Subnet: 56,
 })
 
+const conditionalLimiter = (req, res, next) => {
+    if (process.env.NODE_ENV === "production") {
+        return limiter(req, res, next);
+    }
+    next();
+};
+
 module.exports = {
-    limiter
+    conditionalLimiter
 }
