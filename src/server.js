@@ -5,7 +5,7 @@ const app = express()
 const providers = require('./routes/provider.route');
 
 // middlewares
-const { conditionalLimiter } = require('./middleware/ratelimit');
+/* const { conditionalLimiter } = require('./middleware/ratelimit'); */
 
 app.use(express.json());
 
