@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "production") {
  *  @conditionalLimiter - function to handle many request
  *  @providers - route to show all provider data
 */
-app.use('/api/v1/providers', conditionalLimiter, providers);
+app.use('/api/v1/providers', providers);
 
 app.get("/ping", (req, res) => {
     res.json({ ok: true, timestamp: new Date() });
