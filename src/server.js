@@ -23,6 +23,9 @@ if (process.env.NODE_ENV === "production") {
 */
 app.use('/api/v1/providers', conditionalLimiter, providers);
 
+app.get("/ping", (req, res) => {
+    res.json({ ok: true, timestamp: new Date() });
+});
 
 
 /* https://express-api-v1.up.railway.app */
