@@ -15,6 +15,10 @@ const getProvidersService = async (filters = {}) => {
         query = query.ilike("specialty", `%${filters.specialty}%`);
     }
 
+    if (filters.languages) {
+        query = query.contains("languages", [filters.languages]);
+    }
+
     return await query;
 };
 
