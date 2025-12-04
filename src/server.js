@@ -41,6 +41,9 @@ const port = process.env.PORT || 3000;
 console.log("NODE_ENV:", process.env.NODE_ENV);
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL ? "set" : "missing");
 console.log("SUPABASE_KEY:", process.env.SUPABASE_KEY ? "set" : "missing");
+
+/* https://victorswebsite-api.up.railway.app */
+
 app.listen(port, () => {
     console.log(`API running on port ${port} (${process.env.NODE_ENV})`);
 })
