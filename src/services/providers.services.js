@@ -1,7 +1,7 @@
 const { supabaseConnection } = require("../connection/supabase");
 
-const getProvidersService = async (filters = {}) => {
-    let query = supabaseConnection.from("providers").select("*");
+const getProvidersService = async (filters = {}, pagination = {}) => {
+    let query = supabaseConnection.from("providers").select("*", { count: "exact" });;
 
     if (filters.first_name) {
         query = query.ilike("first_name", `%${filters.first_name}%`);
@@ -17,6 +17,10 @@ const getProvidersService = async (filters = {}) => {
 
     if (filters.languages) {
         query = query.contains("languages", [filters.languages]);
+    }
+
+    if (pagination.from !== undefined && pagination.to !== undefined) {
+        query = query.range(pagination.from, pagination.to);
     }
 
     return await query;

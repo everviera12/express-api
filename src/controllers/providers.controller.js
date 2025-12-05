@@ -5,23 +5,32 @@ const isAlphabetic = (value) => /^[a-zA-Z\s]+$/.test(value);
 
 const getProviderController = async (req, res) => {
     try {
+
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+
+        if (page < 1 || limit < 1) {
+            return res.status(400).json({ message: "page and limit must be positive integers" });
+        }
+
+        const from = (page - 1) * limit;
+        const to = from + limit - 1;
+
         const firstName = req.query.first_name?.trim() || null;
         const lastName = req.query.last_name?.trim() || null;
         const specialty = req.query.specialty?.trim() || null;
         const languages = req.query.languages?.trim() || null;
 
-        // fileds validateing
+        // validate fields
         const fields = { firstName, lastName, specialty, languages };
 
         for (const [key, val] of Object.entries(fields)) {
             if (!val) continue;
 
-            // valid character
             if (!isAlphabetic(val)) {
                 return res.status(400).json({ message: `${key} contains invalid characters` });
             }
 
-            // limt length character
             if (val.length > 30) {
                 return res.status(400).json({ message: `${key} exceeds max length` });
             }
@@ -34,17 +43,32 @@ const getProviderController = async (req, res) => {
             languages
         };
 
-        const { data, error } = await getProvidersService(filters);
+        const baseUrl = `${req.protocol}://${req.get("host")}${req.path}`;
+        const buildLink = (pageNum) => `${baseUrl}?page=${pageNum}&limit=${limit}`;
+
+        const { data, count, error } = await getProvidersService(filters, { from, to });
 
         if (error) return res.status(400).json({ message: "Error fetching providers", error: error.message });
         if (!data || data.length === 0) return res.status(404).json({ message: "No providers found" });
 
-        return res.status(200).json({ message: "success", data });
+        const totalPages = Math.ceil(count / limit);
+
+        return res.status(200).json({
+            message: "success",
+            page,
+            totalPages,
+            total: count,
+            limit,
+            data,
+            prevPage: page > 1 ? buildLink(page - 1) : null,
+            nextPage: page < totalPages ? buildLink(page + 1) : null,
+        });
 
     } catch (err) {
         return res.status(500).json({ message: "Server error", error: err.message });
     }
 };
+
 
 
 

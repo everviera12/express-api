@@ -1,0 +1,26 @@
+id,first_name,last_name,phone,specialty,professional_license,languages,locality,nationality,state,municipality
+1,Carlos,Ramirez,+52-81-2345-6789,Cardiology,CED-983421,"[""Spanish"",""English""]",Monterrey,Mexican,Nuevo León,Monterrey
+2,Laura,Fernandez,+52-55-9876-1122,Dermatology,CED-772315,"[""Spanish""]",Coyoacán,Mexican,Ciudad de México,Coyoacán
+3,Michael,Smith,+1-213-445-9090,Neurology,LIC-55421,"[""English""]",Los Angeles,American,California,Los Angeles
+4,Ana,Lopez,+52-33-4512-3344,Pediatrics,CED-665432,"[""Spanish"",""French""]",Guadalajara,Mexican,Jalisco,Guadalajara
+5,Hiroshi,Tanaka,+81-3-2345-8877,Endocrinology,JPN-221134,"[""Japanese"",""English""]",Tokyo,Japanese,Tokyo,Minato
+6,Sofia,Martins,+55-11-3456-9988,Gastroenterology,BR-998712,"[""Portuguese"",""English""]",São Paulo,Brazilian,São Paulo,São Paulo
+7,David,Gonzalez,+52-614-9988-7722,Orthopedics,CED-889321,"[""Spanish""]",Chihuahua,Mexican,Chihuahua,Chihuahua
+8,Emily,Clark,+44-20-7788-3344,Ophthalmology,UK-441122,"[""English""]",London,British,England,London
+9,Juan,Hernandez,+52-229-1234-5678,Internal Medicine,CED-552311,"[""Spanish""]",Veracruz,Mexican,Veracruz,Veracruz
+10,Maria,Garcia,+34-91-567-2233,Gynecology,ESP-778312,"[""Spanish""]",Madrid,Spanish,Madrid,Madrid
+11,Chen,Wei,+86-21-5566-8877,Oncology,CHN-331199,"[""Mandarin"",""English""]",Shanghai,Chinese,Shanghai,Pudong
+12,Luis,Santos,+52-618-6677-9911,Urology,CED-776543,"[""Spanish""]",Durango,Mexican,Durango,Durango
+13,Amanda,Reyes,+52-55-7788-9911,Psychiatry,CED-889871,"[""Spanish"",""English""]",Benito Juárez,Mexican,Ciudad de México,Benito Juárez
+14,Robert,Johnson,+1-972-445-1122,General Surgery,LIC-22991,"[""English""]",Dallas,American,Texas,Dallas
+15,Elena,Ortega,+52-662-3344-5566,Rheumatology,CED-998877,"[""Spanish""]",Hermosillo,Mexican,Sonora,Hermosillo
+16,Marcos,Delgado,+52-55-6611-2299,Cardiology,CED-112233,"[""Spanish""]",Polanco,Mexican,Ciudad de México,Miguel Hidalgo
+17,Isabella,Ruiz,+52-81-7788-3344,Dermatology,CED-445566,"[""Spanish"",""English""]",San Pedro,Mexican,Nuevo León,San Pedro Garza García
+18,Thomas,Brown,+1-404-223-9988,Neurology,LIC-998877,"[""English""]",Atlanta,American,Georgia,Atlanta
+19,Raul,Serrano,+52-33-9911-2277,Pediatrics,CED-556677,"[""Spanish""]",Zapopan,Mexican,Jalisco,Zapopan
+20,Julia,Mendez,+52-442-6677-8899,Cardiology,CED-667788,"[""Spanish""]",Querétaro,Mexican,Querétaro,Querétaro
+21,Gabriel,Silva,+55-21-8899-1123,Gastroenterology,BR-123443,"[""Portuguese""]",Rio de Janeiro,Brazilian,Rio de Janeiro,Rio de Janeiro
+22,Natalia,Ortiz,+52-229-6677-2244,Dermatology,CED-334455,"[""Spanish""]",Boca del Río,Mexican,Veracruz,Boca del Río
+23,Victor,Camacho,+52-618-7788-9955,Orthopedics,CED-112255,"[""Spanish"",""English""]",Durango,Mexican,Durango,Durango
+24,Emma,Parker,+1-646-221-7788,Psychiatry,LIC-337799,"[""English""]",New York,American,New York,Manhattan
+25,Hannah,Lopez,+34-93-552-7833,Gynecology,ESP-552211,"[""Spanish"",""Catalan""]",Barcelona,Spanish,Catalonia,Barcelona
