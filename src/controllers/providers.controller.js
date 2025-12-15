@@ -43,8 +43,24 @@ const getProviderController = async (req, res) => {
             languages
         };
 
-        const baseUrl = `${req.protocol}://${req.get("host")}${req.path}`;
-        const buildLink = (pageNum) => `${baseUrl}?page=${pageNum}&limit=${limit}`;
+        /* const baseUrl = `${req.protocol}://${req.get("host")}${req.path}`; */
+        const baseUrl = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+
+        console.log(req.protocol);
+        console.log(req.get);
+        console.log(req.path);
+
+        console.log(baseUrl);
+
+        const buildLink = (pageNum) => {
+            const params = new URLSearchParams({
+                ...req.query,
+                page: pageNum,
+                limit
+            });
+
+            return `${req.protocol}://${req.get("host")}${req.baseUrl}?${params.toString()}`;
+        };
 
         const { data, count, error } = await getProvidersService(filters, { from, to });
 
@@ -54,14 +70,18 @@ const getProviderController = async (req, res) => {
         const totalPages = Math.ceil(count / limit);
 
         return res.status(200).json({
+            success: true,
             message: "success",
-            page,
-            totalPages,
-            total: count,
-            limit,
-            data,
-            prevPage: page > 1 ? buildLink(page - 1) : null,
-            nextPage: page < totalPages ? buildLink(page + 1) : null,
+            meta: {
+                page,
+                totalPages,
+                total: count,
+                limit,
+                data,
+                prevPage: page > 1 ? buildLink(page - 1) : null,
+                nextPage: page < totalPages ? buildLink(page + 1) : null,
+            },
+
         });
 
     } catch (err) {
