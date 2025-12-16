@@ -44,6 +44,10 @@ console.log("SUPABASE_KEY:", process.env.SUPABASE_KEY ? "set" : "missing");
 
 /* https://victorswebsite-api.up.railway.app */
 
-app.listen(port, () => {
-    console.log(`API running on port ${port} (${process.env.NODE_ENV})`);
-})
+if (process.env.NODE_ENV !== "test") {
+    app.listen(port, () => {
+        console.log(`API running on port ${port} (${process.env.NODE_ENV})`);
+    })
+}
+
+module.exports = app;
