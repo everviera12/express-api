@@ -43,14 +43,20 @@ const getProviderController = async (req, res) => {
             languages
         };
 
-        /* const baseUrl = `${req.protocol}://${req.get("host")}${req.path}`; */
         const baseUrl = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
 
-        console.log(req.protocol);
-        console.log(req.get);
-        console.log(req.path);
-
+        console.log("--- DEBUG LOG ---");
+        console.log(`Protocolo: ${req.protocol}`);
+        console.log(`Host Solicitado: ${req.get('host')}`);
+        console.log(`IP Real (req.ip): ${req.ip}`);
+        console.log(`User-Agent: ${req.get('user-agent')}`);
         console.log(baseUrl);
+        
+        // Información de Seguridad
+        const authHeader = req.get('authorization');
+        if (authHeader) {
+            console.log(`Authorization: ${authHeader.substring(0, 30)}...`);
+        }
 
         const buildLink = (pageNum) => {
             const params = new URLSearchParams({
