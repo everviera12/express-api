@@ -8,6 +8,7 @@ const providers = require('./routes/provider.route');
 const { conditionalLimiter } = require('./middleware/ratelimit');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 /** Proxy config
 * Enable trust proxy to correctly read client IPs when behind a reverse proxy.

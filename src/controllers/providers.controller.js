@@ -2,38 +2,46 @@ const { getProvidersService, getProviderIdService } = require("../services/provi
 
 const getProviderController = async (req, res) => {
     try {
-        const { page = 1, limit = 10, ...filters } = req.query;
+        const { page, limit, ...filters } = req.query;
 
-        const from = (page - 1) * limit;
-        const to = from + limit - 1;
+        const pageNum = Number(req.query.page ?? 1);
+        const limitNum = Number(req.query.limit ?? 10);
 
-        const buildLink = (pageNum) => {
-            const params = new URLSearchParams({ ...req.query, page: pageNum });
+        const from = (pageNum - 1) * limitNum;
+        const to = from + limitNum - 1;
+
+        const buildLink = (targetPage) => {
+            const params = new URLSearchParams({
+                ...filters,
+                page: targetPage,
+                limit: limitNum,
+            });
+
             return `${req.protocol}://${req.get("host")}${req.baseUrl}?${params.toString()}`;
         };
 
         const { data, count, error } = await getProvidersService(filters, { from, to });
 
         if (error) {
-            return res.status(400).json({ message: "Error fetching providers" });
+            return res.status(400).json({ message: "Error fetching providers", error: error.message });
         }
 
         if (!data || data.length === 0) {
             return res.status(404).json({ message: "No providers found", data: [] });
         }
 
-        const totalPages = Math.ceil(count / limit);
+        const totalPages = Math.ceil(count / limitNum);
 
         return res.status(200).json({
             success: true,
-            data,
+            data: data ?? [],
             meta: {
-                page,
-                limit,
+                page: pageNum,
+                limit: limitNum,
                 total: count,
                 totalPages,
-                prevPage: page > 1 ? buildLink(page - 1) : null,
-                nextPage: page < totalPages ? buildLink(page + 1) : null,
+                prevPage: pageNum > 1 ? buildLink(pageNum - 1) : null,
+                nextPage: pageNum < totalPages ? buildLink(pageNum + 1) : null,
             },
         });
 
@@ -45,7 +53,7 @@ const getProviderController = async (req, res) => {
             });
         }
 
-        return res.status(500).json({ message: "Server error" });
+        return res.status(500).json({ message: "Server error", error: err.message });
     }
 };
 
