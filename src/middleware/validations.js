@@ -1,8 +1,6 @@
 const { z } = require("zod");
 
-/* =====================================================
-    Schemas
-===================================================== */
+/* Providers */
 const providersQuerySchema = z.object({
     first_name: z.string().max(30).regex(/^[a-zA-Z\s]+$/).optional(),
     last_name: z.string().max(30).regex(/^[a-zA-Z\s]+$/).optional(),
@@ -16,6 +14,15 @@ const providersQuerySchema = z.object({
 const providerIdSchema = z.object({
     id: z.coerce.number().int().positive(),
 });
+
+
+/* Login */
+const loginSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+});
+
+const registerSchema = loginSchema;
 
 /* =====================================================
     Generic Zod validator middleware
@@ -38,5 +45,7 @@ const validate = (schema, property = "query") => {
 module.exports = {
     validate,
     providersQuerySchema,
-    providerIdSchema
+    providerIdSchema,
+    loginSchema,
+    registerSchema
 };
