@@ -1,4 +1,4 @@
-const { getProvidersService, getProviderIdService } = require("../services/providers.services");
+const { getProvidersService, getProviderIdService } = require("../services/providers.service");
 
 const getProviderController = async (req, res) => {
     try {
@@ -56,7 +56,6 @@ const getProviderController = async (req, res) => {
         return res.status(500).json({ message: "Server error", error: err.message });
     }
 };
-
 
 const getProviderIdController = async (req, res) => {
     try {
