@@ -23,7 +23,15 @@ const getProvidersService = async (filters = {}, pagination = {}) => {
         query = query.range(pagination.from, pagination.to);
     }
 
-    return await query;
+    const { data, error, count } = await query;
+
+    console.log(data);
+    console.log(error);
+    console.log(count);
+    
+    return { data, error, count };
+
+    /* return await query; */
 };
 
 const getProviderIdService = async (id_provider) => {
