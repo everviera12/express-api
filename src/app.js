@@ -3,6 +3,7 @@ const app = express()
 
 // routes
 const providers = require('./routes/provider.route');
+const loginAuth = require('./routes/auth.route');
 
 // middlewares
 const { conditionalLimiter } = require('./middleware/ratelimit');
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === "production") {
  *  @providers - route to show all provider data
 */
 app.use('/api/v1/providers', conditionalLimiter, providers);
+app.use('/api/v1', conditionalLimiter, loginAuth);
 
 app.get("/", (req, res) => {
     res.send(`
