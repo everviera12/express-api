@@ -1,17 +1,20 @@
 const { Router } = require("express");
 const { getProviderController, getProviderIdController } = require("../controllers/providers.controller");
 const { validate, providersQuerySchema, providerIdSchema } = require("../middleware/validations");
+const { authMiddleware } = require("../middleware/auth");
 
 const router = Router();
 
 router.get(
     "/",
+    authMiddleware,
     validate(providersQuerySchema, "query"),
     getProviderController,
 );
 
 router.get(
     "/:id",
+    authMiddleware,
     validate(providerIdSchema, "params"),
     getProviderIdController
 );

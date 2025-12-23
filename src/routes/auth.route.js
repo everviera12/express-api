@@ -16,4 +16,6 @@ router.post(
     registerUser
 );
 
+/* router.post("/auth/logout", authMiddleware, logoutAuth); */
+
 module.exports = router;

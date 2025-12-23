@@ -19,4 +19,12 @@ const registerWithEmail = async (email, password) => {
     return { data, error };
 }
 
+/* const logout = async (accessToken) => {
+    const { error } = await supabaseConnection.auth.signOut({
+        accessToken,
+    });
+
+    return { error };
+}; */
+
 module.exports = { loginWithEmail, registerWithEmail };

@@ -19,10 +19,7 @@ const loginAuth = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            user: data.user,
-            session: data.session,
-            accessToken: data.session.access_token,
-            refreshToken: data.session.refresh_token,
+            user: data,
         });
 
     } catch (error) {
@@ -63,5 +60,11 @@ const registerUser = async (req, res) => {
     }
 };
 
+const logoutAuth = async (req, res) => {
+    return res.status(200).json({
+        success: true,
+        message: "Logout successful (client must delete token)",
+    });
+};
 
-module.exports = { loginAuth, registerUser };
+module.exports = { loginAuth, registerUser, logoutAuth };
