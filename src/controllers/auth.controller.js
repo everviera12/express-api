@@ -1,10 +1,10 @@
-const { loginWithEmail, registerWithEmail, getUserInfo } = require("../services/auth.service");
+const { getUserInfoService, registerService, authService } = require("../services/auth.service");
 
-const userInformation = async (req, res) => {
+const getUserController = async (req, res) => {
     try {
         const userId = req.user.id;
 
-        const { data, error } = await getUserInfo(userId);
+        const { data, error } = await getUserInfoService(userId);
 
         if (error || !data) {
             return res.status(404).json({
@@ -17,10 +17,10 @@ const userInformation = async (req, res) => {
             success: true,
             user: {
                 id: userId,
-                email: req.user.email,
-                role: data.role,
                 first_name: data.first_name,
                 last_name: data.last_name,
+                email: req.user.email,
+                role: data.role,
             },
         });
 
@@ -29,10 +29,10 @@ const userInformation = async (req, res) => {
     }
 }
 
-const loginAuth = async (req, res) => {
+const authController = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const { data, error } = await loginWithEmail(email, password);
+        const { data, error } = await authService(email, password);
 
         if (error) {
             return res.status(401).json({
@@ -57,7 +57,7 @@ const loginAuth = async (req, res) => {
     }
 }
 
-const registerUser = async (req, res) => {
+const registerController = async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -67,7 +67,7 @@ const registerUser = async (req, res) => {
             });
         }
 
-        const { data, error } = await registerWithEmail(email, password);
+        const { data, error } = await registerService(email, password);
 
         if (error) {
             return res.status(400).json({
@@ -89,11 +89,8 @@ const registerUser = async (req, res) => {
     }
 };
 
-const logoutAuth = async (req, res) => {
-    return res.status(200).json({
-        success: true,
-        message: "Logout successful (client must delete token)",
-    });
+module.exports = {
+    getUserController,
+    authController,
+    registerController
 };
-
-module.exports = { loginAuth, registerUser, logoutAuth, userInformation };

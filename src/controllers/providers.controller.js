@@ -3,7 +3,6 @@ const { getProvidersService, getProviderIdService } = require("../services/provi
 const getProviderController = async (req, res) => {
     try {
         /* console.log(req.user); */
-
         const { page, limit, ...filters } = req.query;
 
         const pageNum = Number(req.query.page ?? 1);
@@ -48,6 +47,7 @@ const getProviderController = async (req, res) => {
         });
 
     } catch (err) {
+
         if (err.name === "ZodError") {
             return res.status(400).json({
                 message: "Invalid query parameters",

@@ -1,11 +1,16 @@
-const { getUserInfo } = require("../services/auth.service");
+const { getUserInfoService } = require("../services/auth.service");
 
+/**
+ * Middleware factory to restrict access based on user roles.
+ * Verifies the user's role against the database and populates the request object with profile data.
+ * @param {...string} allowedRoles - List of roles permitted to access the route.
+ */
 const roleMiddleware = (...allowedRoles) => {
     return async (req, res, next) => {
         try {
             const userId = req.user.id;
 
-            const { data, error } = await getUserInfo(userId);
+            const { data, error } = await getUserInfoService(userId);
 
             if (error || !data) {
                 return res.status(403).json({
@@ -21,7 +26,6 @@ const roleMiddleware = (...allowedRoles) => {
                 });
             }
 
-            // Opcional: dejar el rol disponible
             req.user.role = data.role;
             req.user.first_name = data.first_name;
             req.user.last_name = data.last_name;
