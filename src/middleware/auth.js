@@ -1,5 +1,9 @@
 const { supabaseConnection } = require("../connection/supabase");
 
+/**
+ * Middleware to validate the JWT session token via Supabase.
+ * If valid, it attaches the user object to req.user for subsequent routes
+ */
 const authMiddleware = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
@@ -22,10 +26,9 @@ const authMiddleware = async (req, res, next) => {
             });
         }
 
-        // Usuario autenticado disponible en toda la request
         req.user = data.user;
         next();
-        
+
     } catch (err) {
         console.error(err);
         return res.status(500).json({
