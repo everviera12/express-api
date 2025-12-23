@@ -25,9 +25,9 @@ const getProvidersService = async (filters = {}, pagination = {}) => {
 
     const { data, error, count } = await query;
 
-    console.log(data);
+    /* console.log(data);
     console.log(error);
-    console.log(count);
+    console.log(count); */
     
     return { data, error, count };
 

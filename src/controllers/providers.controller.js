@@ -2,7 +2,7 @@ const { getProvidersService, getProviderIdService } = require("../services/provi
 
 const getProviderController = async (req, res) => {
     try {
-        console.log(req.user);
+        /* console.log(req.user); */
 
         const { page, limit, ...filters } = req.query;
 
