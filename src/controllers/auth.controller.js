@@ -1,4 +1,33 @@
-const { loginWithEmail, registerWithEmail } = require("../services/auth.service");
+const { loginWithEmail, registerWithEmail, getUserInfo } = require("../services/auth.service");
+
+const userInformation = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const { data, error } = await getUserInfo(userId);
+
+        if (error || !data) {
+            return res.status(404).json({
+                success: false,
+                message: "User role not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            user: {
+                id: userId,
+                email: req.user.email,
+                role: data.role,
+                first_name: data.first_name,
+                last_name: data.last_name,
+            },
+        });
+
+    } catch (err) {
+        return res.status(500).json({ message: "Server error" });
+    }
+}
 
 const loginAuth = async (req, res) => {
     try {
@@ -67,4 +96,4 @@ const logoutAuth = async (req, res) => {
     });
 };
 
-module.exports = { loginAuth, registerUser, logoutAuth };
+module.exports = { loginAuth, registerUser, logoutAuth, userInformation };

@@ -1,5 +1,20 @@
 const { supabaseConnection } = require("../connection/supabase");
 
+const getUserInfo = async (userId) => {
+    const { data, error } = await supabaseConnection
+        .from("role_users")
+        .select(`
+            user_id,
+            role,
+            first_name,
+            last_name
+        `)
+        .eq("user_id", userId)
+        .single();
+
+    return { data, error };
+};
+
 const loginWithEmail = async (email, password) => {
     const { data, error } = await supabaseConnection.auth.signInWithPassword({
         email,
@@ -19,12 +34,4 @@ const registerWithEmail = async (email, password) => {
     return { data, error };
 }
 
-/* const logout = async (accessToken) => {
-    const { error } = await supabaseConnection.auth.signOut({
-        accessToken,
-    });
-
-    return { error };
-}; */
-
-module.exports = { loginWithEmail, registerWithEmail };
+module.exports = { loginWithEmail, registerWithEmail, getUserInfo };
