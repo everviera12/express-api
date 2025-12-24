@@ -5,7 +5,6 @@ const authService = async (email, password) => {
     return { data, error };
 };
 
-
 const registerService = async (email, password) => {
     const { data, error } = await supabaseConnection.auth.signUp({ email, password, });
     return { data, error };

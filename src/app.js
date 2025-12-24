@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const app = express()
 
@@ -10,6 +11,7 @@ const { conditionalLimiter } = require('./middleware/ratelimit');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 
 /** Proxy config
 * Enable trust proxy to correctly read client IPs when behind a reverse proxy.
