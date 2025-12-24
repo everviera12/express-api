@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { authController, registerController, getUserController } = require("../controllers/auth.controller");
+const { authController, registerController } = require("../controllers/auth.controller");
 const { validate, loginSchema, registerSchema } = require("../middleware/validations");
 const { authMiddleware } = require("../middleware/auth");
 
@@ -17,7 +17,7 @@ router.post(
     registerController
 );
 
-router.get("/profile", authMiddleware, getUserController);
+router.get("/profile", authMiddleware, authController);
 
 /* router.post("/auth/logout", authMiddleware, logoutAuth); */
 
