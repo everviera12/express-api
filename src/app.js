@@ -20,6 +20,45 @@ if (process.env.NODE_ENV === "production") {
     app.set("trust proxy", true);
 }
 
+app.use((req, res, next) => {
+    const start = Date.now();
+
+    res.on("finish", () => {
+        const duration = Date.now() - start;
+        const origin = req.headers.origin || "No origin";
+        const referer = req.headers.referer || "No referer";
+        const host = req.headers.host;
+        const userAgent = req.headers['user-agent'];
+        const localDate = new Date().toLocaleString("en-EN", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+        });
+
+        console.log(
+            `---------------- \n` +
+            `---------------- \n` +
+            `Fecha: ${localDate} \n` +
+            `Origen: ${origin} \n` +
+            `Referer: ${referer} \n` +
+            `Agent: ${userAgent} \n` +
+            `Host Destino: ${host} \n` +
+            `IP Cliente: ${req.ip} \n` +
+            `Método/Ruta: ${req.method} ${req.originalUrl} \n` +
+            `Status: ${res.statusCode} - ${duration}ms \n` +
+            `-----------------------` +
+            `---------------- \n`
+        );
+    });
+
+    next();
+});
+
+
 /** API base route
  *  Applies rate limiting ONLY when running in production.
  *  @conditionalLimiter - function to handle many request
